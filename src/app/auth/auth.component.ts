@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -11,14 +11,28 @@ import { Store } from '@ngrx/store';
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy, OnInit{
   isLoginMode = true;
   isLoading = false;
   error: string = null;
 
   constructor(private authService: AuthService, 
     private store:Store<fromApp.AppState>,
+    private componentFactoryResolver:ComponentFactoryResolver,
     private router: Router) {}
+     
+    ngOnInit(){
+      this.store.select('auth').subscribe(authState =>{
+       this.isLoading = authState.loading;
+       this.error = authState.authEror;
+       if (this.error){
+         this.showErrorAlert(this.error)
+       }
+      })
+    }
+  showErrorAlert(error: string) {
+    throw new Error("Method not implemented.");
+  }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -41,8 +55,8 @@ export class AuthComponent {
     } else {
       authObs = this.authService.signup(email, password);
     }
-
-    authObs.subscribe(
+   
+   /* authObs.subscribe(
       resData => {
         console.log(resData);
         this.isLoading = false;
@@ -53,11 +67,14 @@ export class AuthComponent {
         this.error = errorMessage;
         this.isLoading = false;
       }
-    );
+    );*/
 
     form.reset();
   }
   onHandleError() {
     this.error = null;
+  }
+  ngOnDestroy() {
+    
   }
 }
