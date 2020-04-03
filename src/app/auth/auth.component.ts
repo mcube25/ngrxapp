@@ -1,10 +1,8 @@
 import { Component, OnInit, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.action';
-import { AuthService, AuthResponseData } from './auth.service';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -18,15 +16,14 @@ export class AuthComponent implements OnDestroy, OnInit{
 private closeSub: Subscription;
 private storeSub: Subscription;
 
-  constructor(private authService: AuthService, 
+  constructor( 
     private store:Store<fromApp.AppState>,
-    private componentFactoryResolver:ComponentFactoryResolver,
-    private router: Router) {}
+    private componentFactoryResolver:ComponentFactoryResolver) {}
      
     ngOnInit(){
       this.storeSub = this.store.select('auth').subscribe(authState =>{
        this.isLoading = authState.loading;
-       this.error = authState.authEror;
+       this.error = authState.authError;
        if (this.error){
          this.showErrorAlert(this.error)
        }

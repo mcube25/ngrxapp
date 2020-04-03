@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-import * as AuthActions from './auth.actions';
+import * as AuthActions from './auth.action';
 import { User } from '../user.model';
 import { AuthService } from '../auth.service';
 
