@@ -40,6 +40,9 @@ switch (action.type) {
                 loading: true
                  
                }
+               case AuthActions.SIGNUP_START:
+      
+
                case AuthActions.AUTHENTICATE_FAIL:
                    return {
                     ...state,
@@ -48,6 +51,11 @@ switch (action.type) {
                     loading: false
                   
                    }
+                   case AuthActions.CLEAR_ERROR:
+                       return {
+                           ...state,
+                           authEror: null
+                       }
     default:
         return state;
 }
