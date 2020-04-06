@@ -22,7 +22,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
    
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot(fromApp.appReducer),
